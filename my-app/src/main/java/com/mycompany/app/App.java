@@ -42,15 +42,15 @@ public class App
         boolean enableDetailedLogs;
     }
 
-    public static String getPassword(Scanner sc) {
+    public static String getPassword(Scanner sc, String prompt) {
 
         String password;
         Console console = System.console();
         if (console == null) {
-            System.out.print("Enter password: ");
+            System.out.print(prompt);
             password = sc.nextLine();
         } else {
-            password = String.valueOf(console.readPassword("Enter password: "));
+            password = String.valueOf(console.readPassword(prompt));
         }
         return password;
     }
@@ -59,32 +59,34 @@ public class App
         System.out.println("Test LDAP Client Program");
 
         Scanner sc= new Scanner(System.in);
+        String email, password, ldapUrl, ldapBaseDN, ldapSearchAttribute, serviceAccountUserName, serviceAccountPassword;
+        boolean ldapUseTls, ldapUseSsl, useLdapSearchAndBind;
+        Integer ldapPort;
         System.out.print("Enter email: ");
-        String email = sc.nextLine();
-        String password = getPassword(sc);
+        email = sc.nextLine();
+        password = getPassword(sc, "Enter password: ");
         System.out.print("Enter LDAP host name: ");
-        String ldapUrl = sc.nextLine();
+        ldapUrl = sc.nextLine();
         System.out.print("Enter LDAP port: ");
         String port = sc.nextLine();
-        Integer ldapPort = Integer.parseInt(port);
+        ldapPort = Integer.parseInt(port);
         System.out.print("Use LDAPS: ");
         String ssl = sc.nextLine();
-        boolean ldapUseSsl = ssl.equals("true");
+        ldapUseSsl = ssl.equals("true");
         System.out.print("Use startTls: ");
         String tls = sc.nextLine();
-        boolean ldapUseTls = tls.equals("true");
+        ldapUseTls = tls.equals("true");
         System.out.print("Use search and bind: ");
         String searchBind = sc.nextLine();
-        boolean useLdapSearchAndBind = searchBind.equals("true");
+        useLdapSearchAndBind = searchBind.equals("true");
         System.out.print("Enter service account username: ");
-        String serviceAccountUserName = sc.nextLine();
-        System.out.println("Enter service account password: ");
-        String serviceAccountPassword = getPassword(sc);
+        serviceAccountUserName = sc.nextLine();
+        serviceAccountPassword = getPassword(sc, "Enter service account password: ");
         System.out.print("Enter LDAP search attribute ");
-        String ldapSearchAttribute = sc.nextLine();
+        ldapSearchAttribute = sc.nextLine();
 
         System.out.print("Enter LDAP Base DN: ");
-        String ldapBaseDN = sc.nextLine();
+        ldapBaseDN = sc.nextLine();
 
         String ldapCustomerUUID = "";
         String ldapDnPrefix = "CN=";
@@ -301,3 +303,6 @@ public class App
         return new ImmutablePair<>(distinguishedName, role);
     }
 }
+
+
+
