@@ -157,6 +157,7 @@ public class App
             }
 
             email = email.toLowerCase();
+            System.out.println("Attempting to bind via distinguishedName = " + distinguishedName);
             try {
                 connection.bind(distinguishedName, password);
             } catch (LdapNoSuchObjectException e) {
